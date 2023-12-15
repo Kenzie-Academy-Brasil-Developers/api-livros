@@ -1,6 +1,6 @@
 import express, { json } from "express"
 import { booksRouter } from "./routes/book.router"
-import { GlobalErrors } from "./errors/errors.middleware"
+import { GlobalErrors } from "./middlewares/errors.middleware"
 
 export const app = express()
 const globalErrors = new GlobalErrors()
