@@ -1,15 +1,13 @@
 import { booksDatabase, generateId } from "../database/database"
-import { IBook } from "../interface/books.interface"
+import {  TBook, TCreateBook, TUpdateBook } from "../interface/books.interface"
 
 export class BooksServices {
 
-    createBook = (name: string, pages: string, category: string | undefined ): IBook => {
+    createBook = (data: TCreateBook): TBook => {
 
-        const newBook: IBook = {
+        const newBook: TBook = {
             id: generateId(),
-            name: name,
-            pages: Number(pages),
-            category: category,
+            ...data,
             createdAt: new Date(),
             updatedAt: new Date()
         }
@@ -19,19 +17,23 @@ export class BooksServices {
         return newBook
     }
 
-    getBooks = (): IBook[] => {
-        return booksDatabase
+    getBooks = (query: string | undefined) => {
+        if(query){
+            return booksDatabase.filter((book) => book.name === query)
+        }else{
+            return booksDatabase
+        }
     }
 
-    getOneBook = (id: string) => {
-       const book = booksDatabase.find(book => book.id === Number(id))
+    getOneBook = (id: number) => {
+       const book = booksDatabase.find(book => book.id === id)
 
        return book
     }
 
-    updatedBook = (id: string, data: { name?: string | undefined, pages?: number | undefined, category?: string | undefined}): IBook => {
+    updatedBook = (id: number, data: TUpdateBook): TBook => {
 
-        const index=  booksDatabase.findIndex(book => book.id === Number(id))
+        const index=  booksDatabase.findIndex(book => book.id === id)
 
         booksDatabase[index] = {
             ...booksDatabase[index],
