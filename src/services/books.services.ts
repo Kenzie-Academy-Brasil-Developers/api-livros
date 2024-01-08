@@ -1,5 +1,5 @@
 import { booksDatabase, generateId } from "../database/database"
-import {  TBook, TCreateBook, TUpdateBook } from "../interface/books.interface"
+import { TBook, TCreateBook, TUpdateBook } from "../interface/books.interface"
 
 export class BooksServices {
 
@@ -19,22 +19,27 @@ export class BooksServices {
 
     getBooks = (query: string | undefined) => {
 
-        if(query){
-          return booksDatabase.filter((book) => book.name === query)
-        }else{
+        if (query) {
+
+            return booksDatabase.filter(
+                (book) => ((book.name).toLocaleLowerCase()).includes((query).toLocaleLowerCase())
+            )
+            
+        } else {
             return booksDatabase
         }
     }
 
     getOneBook = (id: string) => {
-       const book = booksDatabase.find(book => book.id === Number(id))
 
-       return book
+        const book = booksDatabase.find(book => book.id === Number(id))
+
+        return book
     }
 
     updatedBook = (id: string, data: TUpdateBook): TBook => {
 
-        const index=  booksDatabase.findIndex(book => book.id === Number(id))
+        const index = booksDatabase.findIndex(book => book.id === Number(id))
 
         booksDatabase[index] = {
             ...booksDatabase[index],
@@ -45,9 +50,10 @@ export class BooksServices {
         return booksDatabase[index];
     }
 
-    deleteBook(id: string) : void{
-       const index=  booksDatabase.findIndex(book => book.id === Number(id))
+    deleteBook(id: string): void {
+        
+        const index = booksDatabase.findIndex(book => book.id === Number(id))
 
-       booksDatabase.splice(index,1)
+        booksDatabase.splice(index, 1)
     }
 }

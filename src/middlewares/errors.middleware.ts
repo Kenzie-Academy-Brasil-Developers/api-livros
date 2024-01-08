@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express"
 import { AppError } from "../errors/errors"
-import { ZodError } from "zod"
 
 export class HandleErrors  {
     execute = (
@@ -16,5 +15,4 @@ export class HandleErrors  {
             return res.status(500).json({ error: "Internal server error" })
         }
     }
-
 }

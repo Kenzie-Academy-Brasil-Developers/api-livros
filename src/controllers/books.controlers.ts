@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import { BooksServices } from "../services/books.services";
+import { Request, Response } from "express"
+import { BooksServices } from "../services/books.services"
 
 export class BooksControllers {
 
