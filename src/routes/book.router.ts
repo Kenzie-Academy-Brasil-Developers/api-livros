@@ -1,23 +1,23 @@
 import { Router } from "express"
 import { BooksControllers } from "../controllers/books.controlers"
 import { BookMiddlewares } from "../middlewares/books.middlewares"
-import { GlobalErrors } from "../middlewares/errors.middleware"
 import { bookCreateSchema, bookUpdateSchema, querySchema } from "../schemas/books.schemas"
+import { ValidateRequest } from "../middlewares/validateRequest.middleware"
 
 export const booksRouter = Router()
 
 const bookMiddlewares = new BookMiddlewares()
 const bookControllers = new BooksControllers()
-const globalErrors = new GlobalErrors()
+const validateRequest = new ValidateRequest()
 
 
 booksRouter.post("/",
-globalErrors.validateBody({body: bookCreateSchema}),
+validateRequest.execute({body: bookCreateSchema}),
 bookMiddlewares.verifybookRegister,
 bookControllers.createBook )
 
 booksRouter.get("/",
-globalErrors.validateBody({query: querySchema}),
+validateRequest.execute({query: querySchema}),
 bookControllers.getBooks)
 
 booksRouter.get("/:id",
@@ -25,7 +25,7 @@ bookMiddlewares.isBookIdValid,
 bookControllers.getOneBook ) 
 
 booksRouter.patch("/:id",
-globalErrors.validateBody({body: bookUpdateSchema}),
+validateRequest.execute({body: bookUpdateSchema}),
 bookMiddlewares.isBookIdValid, 
 bookMiddlewares.verifybookRegister,
 bookControllers.updatedBook)

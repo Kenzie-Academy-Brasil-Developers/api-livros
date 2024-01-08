@@ -22,14 +22,14 @@ export class BooksControllers {
 
     getOneBook = (req: Request, res: Response): Response => {
 
-        const book = this.booksService.getOneBook(Number(req.params.id))
+        const book = this.booksService.getOneBook(req.params.id)
 
         return res.status(200).json(book)
     }
 
     updatedBook = (req: Request, res: Response): Response => {
 
-        const bookUpdate = this.booksService.updatedBook(Number(req.params.id), req.body)
+        const bookUpdate = this.booksService.updatedBook(req.params.id, req.body)
 
         return res.status(200).json(bookUpdate)
     }

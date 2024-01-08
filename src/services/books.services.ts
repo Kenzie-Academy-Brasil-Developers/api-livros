@@ -18,22 +18,23 @@ export class BooksServices {
     }
 
     getBooks = (query: string | undefined) => {
+
         if(query){
-            return booksDatabase.filter((book) => book.name === query)
+          return booksDatabase.filter((book) => book.name === query)
         }else{
             return booksDatabase
         }
     }
 
-    getOneBook = (id: number) => {
-       const book = booksDatabase.find(book => book.id === id)
+    getOneBook = (id: string) => {
+       const book = booksDatabase.find(book => book.id === Number(id))
 
        return book
     }
 
-    updatedBook = (id: number, data: TUpdateBook): TBook => {
+    updatedBook = (id: string, data: TUpdateBook): TBook => {
 
-        const index=  booksDatabase.findIndex(book => book.id === id)
+        const index=  booksDatabase.findIndex(book => book.id === Number(id))
 
         booksDatabase[index] = {
             ...booksDatabase[index],
